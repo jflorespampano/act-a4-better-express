@@ -1,37 +1,52 @@
-// import controllerDbSqlite from './controller.db.sqlite.js';
-import Database from "better-sqlite3";
+import controllerDbSqlite from './controller.db.sqlite.js';
 
-function modelUsers(mydb){
+/**
+ * 
+ * @param {object} dbController controlado de base de datos
+ * @returns {object} un modelo de usuarios con métodos para obtener todos los usuarios, obtener un usuario por id y crear un nuevo usuario {getAll, get, create}
+ */
+function modelUsers(dbController=null){
+    const {open, run, get:getOne, all, close}=dbController
 
+    /**
+     * 
+     * @returns {array} arreglo de objetos de usuarios [{},{},...]
+     */
     function getAll(){
-        const db = new Database(mydb)
+        open()
         const query = "select * from users;"
-        const personas = db.prepare(query).all()
-        db.close()
-        // console.log(personas)
+        const personas = all(query)
+        close()
         return (personas)
     }
 
+    /**
+     * 
+     * @param {number} id del usuario
+     * @returns {object} un objeto de usuario {id: 1, name: "ana", username: "an1"}
+     */
     function get(id){
-        const db = new Database(mydb)
+        open()
         const query = "select * from users where id=?;"
-        const personas = db.prepare(query).get([id])
-        db.close()
-        // console.log(personas)
+        const personas = getOne(query, [id])
+        close()
         return(personas)
     }
 
+    /**
+     * 
+     * @param {object} datos del usuario {name: "ana", username: "an1"}
+     * @returns {object} el objeto del usuario creado {changes: 1, lastInsertRowid: 1}
+     */
     function create(datos){
     // console.log("recibido",datos)
         const sql=`
         insert into users(name,username) 
         values(@name,@username)
         `
-        const db = new Database(mydb)
-        const insertData=db.prepare(sql)
-        const resp=insertData.run(datos)
-        // const resp=insertData.run(datos)
-        db.close()
+        open()
+        const resp=run(sql, datos)
+        close()
         return resp
     }
     return {

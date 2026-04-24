@@ -324,3 +324,7 @@ export function create(mydb,datos){
 ```
 
 Escriba el modelo para usuarios
+
+## el modelo DAO
+
+El DAO es un patrón de diseño que abstrae y encapsula todo el acceso a los datos (consultas, inserciones, actualizaciones, eliminaciones) de una fuente de datos (base de datos, archivo, API, etc.). Su objetivo es separar la lógica de negocio de la lógica de persistencia, haciéndolo más mantenible y testeable.
