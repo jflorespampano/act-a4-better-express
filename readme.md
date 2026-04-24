@@ -328,3 +328,30 @@ Escriba el modelo para usuarios
 ## el modelo DAO
 
 El DAO es un patrón de diseño que abstrae y encapsula todo el acceso a los datos (consultas, inserciones, actualizaciones, eliminaciones) de una fuente de datos (base de datos, archivo, API, etc.). Su objetivo es separar la lógica de negocio de la lógica de persistencia, haciéndolo más mantenible y testeable.
+
+## agregar rutas
+
+agregaremos rutas en una nueva rama:
+
+```bash
+# Crear y moverse a rama "feature/login"
+git checkout -b routes
+
+# Hacer cambios (ej: crear routes.js)
+echo "function routes() {}" > routes.js
+
+# Añadir y commit
+git add .
+git commit -m "Agrega rutas"
+
+# Subir al remoto
+git push -u origin routes
+
+# Volver a main y fusionar
+git checkout main
+git merge routes
+
+# Eliminar rama local y remota
+git branch -d routes
+git push origin --delete routes
+```
